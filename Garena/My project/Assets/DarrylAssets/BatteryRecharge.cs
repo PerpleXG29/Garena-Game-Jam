@@ -12,6 +12,8 @@ public class BatteryRecharge : MonoBehaviour
 <<<<<<< Updated upstream
     public TextMeshProUGUI RechargeText;
     private bool CanPress = true;
+
+    private bool textCheck;
     private void Start()
     {
         RechargeText.enabled = false;
@@ -47,9 +49,13 @@ public class BatteryRecharge : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+<<<<<<< Updated upstream
             RechargeText.enabled = true;
 =======
             isTrigger = true;
+>>>>>>> Stashed changes
+=======
+            RechargeText.enabled = false;
 >>>>>>> Stashed changes
         }
     }
@@ -74,7 +80,7 @@ public class BatteryRecharge : MonoBehaviour
             
 
         }
-        RechargeText.enabled = true;
+       
         CanPress = true;
 
         flashlightManager.Battery = flashlightManager.maxBattery;
