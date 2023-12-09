@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Monster
+  - Cure1
+  - Cure2
+  - Cure3
   layers:
   - Default
   - TransparentFX
