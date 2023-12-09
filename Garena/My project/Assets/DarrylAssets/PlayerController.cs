@@ -42,5 +42,8 @@ public class PlayerController : MonoBehaviour
 
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
+
+        float horizontalRotation = cameraTransform.eulerAngles.y;
+        transform.rotation = Quaternion.Euler(0f, horizontalRotation, 0f);
     }
 }
