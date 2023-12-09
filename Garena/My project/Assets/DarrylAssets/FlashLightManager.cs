@@ -4,7 +4,9 @@ public class FlashlightManager : MonoBehaviour
 {
     public Light flashlight;
     public bool TurnedOn = false;
-    public int Battery = 120;
+    public int Battery;
+    public int maxBattery;
+    public float maxIntensity;
 
     private float batteryDecreaseTimer = 0f;
     private float batteryDecreaseInterval = 1f;
@@ -12,6 +14,7 @@ public class FlashlightManager : MonoBehaviour
     private void Start()
     {
         flashlight.enabled = false;
+        Battery = maxBattery;
     }
 
     private void Update()
@@ -29,7 +32,7 @@ public class FlashlightManager : MonoBehaviour
         UpdateLightIntensity();
     }
 
-    private void ToggleFlashlight()
+    public void ToggleFlashlight()
     {
         flashlight.enabled = !flashlight.enabled;
         TurnedOn = flashlight.enabled;
@@ -48,7 +51,7 @@ public class FlashlightManager : MonoBehaviour
 
     private void DecreaseBattery()
     {
-        Battery --;
+        Battery--;
 
         if (Battery <= 0)
         {
@@ -59,14 +62,13 @@ public class FlashlightManager : MonoBehaviour
 
     private void UpdateLightIntensity()
     {
-        float maxIntensity = 12f;
-        float intensity = Battery / 10f;
+        float decreaseRate = maxIntensity / maxBattery;
+        float intensity = Battery * decreaseRate;
         flashlight.intensity = Mathf.Clamp(intensity, 0f, maxIntensity);
     }
 
     public void RechargeBattery(int amount)
     {
-        Battery = Mathf.Clamp(Battery + amount, 0, 120);
-       
+        Battery = Mathf.Clamp(Battery + amount, 0, maxBattery);
     }
 }
