@@ -37,20 +37,26 @@ public class ZombieStateMachine : StateMachine
     public AIPath AIPath;
     public Transform SpawnLocation;
     public Transform eyeTransform;
+    public AudioManager AudioManager;
 
     public Target Target;
 
     public bool IsChasing = false;
 
     Material zombieMaterial;
+
+
+    public void InitializeTarget(Target target)
+    {
+        this.Target = target;
+    }
+
     private void Start()
     {
         zombieMaterial = GetComponent<MeshRenderer>().material;
 
         SwitchState(new ZombiePatrolState(this));
         AIPath.maxSpeed = MaxSpeed;
-
-
     }
 
 

@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class FlashlightManager : MonoBehaviour
 {
+    int TurnOnHash = Animator.StringToHash("LightOn");
+    int TurnOffHash = Animator.StringToHash("LightOff");
+
     public Light flashlight;
     public bool TurnedOn = false;
     public int Battery;
@@ -11,6 +14,8 @@ public class FlashlightManager : MonoBehaviour
     private float batteryDecreaseTimer = 0f;
     private float batteryDecreaseInterval = 1f;
 
+    [SerializeField] Animator _animator;
+    bool isOn;
     private void Start()
     {
         flashlight.enabled = false;
@@ -36,6 +41,16 @@ public class FlashlightManager : MonoBehaviour
     {
         flashlight.enabled = !flashlight.enabled;
         TurnedOn = flashlight.enabled;
+        if (!isOn)
+        {
+            _animator.SetTrigger(TurnOnHash);
+            isOn = !isOn;
+        }
+        else
+        {
+            _animator.SetTrigger(TurnOffHash);
+            isOn = !isOn;
+        }
     }
 
     private void UpdateBattery()
@@ -46,6 +61,8 @@ public class FlashlightManager : MonoBehaviour
         {
             DecreaseBattery();
             batteryDecreaseTimer = 0f;
+
+            
         }
     }
 
@@ -57,6 +74,9 @@ public class FlashlightManager : MonoBehaviour
         {
             Battery = 0;
             flashlight.intensity = 0;
+
+            _animator.SetTrigger(TurnOffHash);
+            isOn = false;
         }
     }
 

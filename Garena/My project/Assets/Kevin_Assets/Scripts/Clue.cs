@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[System.Serializable]
-public class Clue
+public class Clue : MonoBehaviour
 {
-    public string clueText;
+
 }

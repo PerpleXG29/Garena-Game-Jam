@@ -8,6 +8,7 @@ public class ClueRandomizerManager : MonoBehaviour
     Location vialLocation;
 
     List<Vial> Vials = new List<Vial>();
+    List<PaperClue> PaperClues = new List<PaperClue>();
 
     [Header("Header")]
     [SerializeField] VialAddressClue[] _allCluesLoc;
@@ -15,9 +16,12 @@ public class ClueRandomizerManager : MonoBehaviour
     [SerializeField] SpawnManager _hintSpawnManager;
 
     [Header("VialPrefab")]
-    [SerializeField] GameObject _vial1;
-    [SerializeField] GameObject _vial2;
-    [SerializeField] GameObject _vial3;
+    [SerializeField] GameObject[] _vials;
+    [SerializeField] PaperClue _paperCluePrefab;
+
+
+    [Header("Reference")]
+    [SerializeField] Animator _animator;
 
     private void Start()
     {
@@ -98,8 +102,24 @@ public class ClueRandomizerManager : MonoBehaviour
 
 
         yield return new WaitForEndOfFrame();
-        //Put Text Data to the Paper
 
+
+        //Put Text Data to the Paper
+        foreach(var vial in Vials)
+        {
+            PaperClue newClue = Instantiate(_paperCluePrefab, vial.ClueSpawnTransform.position, Quaternion.identity);
+            newClue.SetPaperText(vial.vialLocClueText);
+
+            PaperClues.Add(newClue);
+        }
+
+        //Spawn All Vials Base on Randomize
+        int count = 0;
+        foreach (var item in Vials)
+        {
+            Instantiate(_vials[count], item.VialSpawnTransform.position, Quaternion.identity);
+            count++;
+        }
 
 
     }

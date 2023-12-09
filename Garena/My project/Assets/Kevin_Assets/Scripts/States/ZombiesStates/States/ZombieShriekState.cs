@@ -13,6 +13,8 @@ public class ZombieShriekState : ZombieBaseState
         ZSM.ChangeMaterial(Color.yellow);
         ZSM.AIPath.canMove = false;
         GetAllZombieNear();
+
+        ZSM.AudioManager.PlaySfx("Shriek_1");
     }
     public override void UpdateState(float deltaTime)
     {

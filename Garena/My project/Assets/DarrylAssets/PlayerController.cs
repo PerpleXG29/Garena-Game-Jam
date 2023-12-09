@@ -26,6 +26,9 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
 
         inputManager = InputManager.Instance;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void Update()
@@ -36,8 +39,11 @@ public class PlayerController : MonoBehaviour
             playerVelocity.y = 0f;
         }
 
+<<<<<<< Updated upstream
         
 
+=======
+>>>>>>> Stashed changes
         Vector2 movement = inputManager.GetPlayerMovement();
         Vector3 move = new Vector3(movement.x, 0f, movement.y);
 

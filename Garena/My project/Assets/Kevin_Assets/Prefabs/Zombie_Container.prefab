@@ -359,13 +359,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxSpeed: 6
   HearRange: 10
-  SeeRange: 20
-  fieldOfViewSize: 60
-  PatrolDistance: 20
+  SeeRange: 10
+  fieldOfViewSize: 70
+  PatrolDistance: 10
   PatrolDuration: 5
   CheckDuration: 5
   ChaseDuration: 3
-  ShriekDistance: 20
+  ShriekDistance: 10
   ShriekDuration: 2
   ZombieLayerMask:
     serializedVersion: 2
@@ -377,6 +377,7 @@ MonoBehaviour:
   SpawnLocation: {fileID: 3295463580517115034}
   eyeTransform: {fileID: 5601172024517948513}
   Target: {fileID: 0}
+  IsChasing: 0
 --- !u!1 &7657284673368309220
 GameObject:
   m_ObjectHideFlags: 0
@@ -386,6 +387,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3209464439076664881}
+  - component: {fileID: 5732829795836839564}
   m_Layer: 7
   m_Name: Zombie_Container
   m_TagString: Untagged
@@ -410,3 +412,37 @@ Transform:
   - {fileID: 3295463580517115034}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5732829795836839564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7657284673368309220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fe0ab6a0cbb37643a20b8abab73d864, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SFX:
+  - Name: Growl_1
+    Clip: {fileID: 8300000, guid: e21beaaacf394ec48b98b431fd4e28d0, type: 3}
+    Volume: 0
+    Pitch: 0
+    Source: {fileID: 0}
+    PlayOnAwake: 0
+    Loop: 0
+  - Name: Growl_2
+    Clip: {fileID: 8300000, guid: e21beaaacf394ec48b98b431fd4e28d0, type: 3}
+    Volume: 0
+    Pitch: 0
+    Source: {fileID: 0}
+    PlayOnAwake: 0
+    Loop: 0
+  - Name: Shriek_1
+    Clip: {fileID: 8300000, guid: 6f96a433fa9f6b94ba94b1d1210585e2, type: 3}
+    Volume: 0
+    Pitch: 0
+    Source: {fileID: 0}
+    PlayOnAwake: 0
+    Loop: 0
