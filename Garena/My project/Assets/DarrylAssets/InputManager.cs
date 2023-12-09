@@ -14,16 +14,8 @@ public class InputManager : MonoBehaviour
     }
     
     private void Awake() 
-    { 
-        if(_instance != null && _instance != this)
-        {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            playerMovement = new PlayerMovement();
-        }
-
+    {
+        _instance = this;
         playerMovement = new PlayerMovement();
     }
 
