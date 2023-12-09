@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
@@ -22,6 +21,10 @@ public class PlayerController : MonoBehaviour
         controller = GetComponent<CharacterController>();
         cameraTransform = Camera.main.transform;
 
+      
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         inputManager = InputManager.Instance;
     }
 
@@ -33,15 +36,15 @@ public class PlayerController : MonoBehaviour
             playerVelocity.y = 0f;
         }
 
-        Debug.Log(inputManager.GetPlayerMovement());
+        
 
         Vector2 movement = inputManager.GetPlayerMovement();
         Vector3 move = new Vector3(movement.x, 0f, movement.y);
-        move = cameraTransform.forward * move.z + cameraTransform.right * move.x;
-        move.y = 0f;
+
+        
+        move = Quaternion.Euler(0f, cameraTransform.eulerAngles.y, 0f) * move;
 
         controller.Move(move * Time.deltaTime * playerSpeed);
-
 
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);

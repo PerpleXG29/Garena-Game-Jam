@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class PickUp : MonoBehaviour
@@ -7,17 +8,46 @@ public class PickUp : MonoBehaviour
     public bool Cure3 = false;
     public bool Carrying = false;
 
-    
+    public TextMeshProUGUI PickUpText;
 
+    private void Start()
+    {
+        PickUpText.enabled = false;
+    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Cure1") || other.CompareTag("Cure2") || other.CompareTag("Cure3"))
+        {
+            if (!Carrying)
+            {
+                PickUpText.enabled = true;
+            }
+        }
+    }
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Cure1") || other.CompareTag("Cure2") || other.CompareTag("Cure3"))
         {
+            
             Debug.Log("InRange");
             if (Input.GetKey(KeyCode.F) && !Carrying)
             {
                 PickUpLogic(other.gameObject);
+                PickUpText.enabled=false;
             }
+        }
+        
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Cure1") || other.CompareTag("Cure2") || other.CompareTag("Cure3"))
+        {
+       
+               PickUpText.enabled = false;
+       
         }
     }
 

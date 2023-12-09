@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -12,13 +13,25 @@ public class DropObject : MonoBehaviour
     private int CureCount = 0;
 
     public PickUp pickUp;
+    public TextMeshProUGUI DropText;
+
+    private void Start()
+    {
+        DropText.enabled = false;
+    }
 
     private void Update()
     {
         Debug.Log(CureCount);
     }
 
-    
+    private void OnTriggerEnter(Collider collision)
+    {
+        if(pickUp.Carrying == true && collision.CompareTag("Player"))
+        {
+            DropText.enabled = true;
+        }
+    }
 
     private void OnTriggerStay(Collider other)
     {
@@ -26,12 +39,16 @@ public class DropObject : MonoBehaviour
         {
             if (pickUp.Cure1 == true || pickUp.Cure2 == true || pickUp.Cure3 == true)
                 DropLogic();
+            DropText.enabled = false;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        //Insert Disableing UI
+        if (other.CompareTag("Player"))
+        {
+            DropText.enabled = false;
+        }
     }
 
     private void DropLogic()
