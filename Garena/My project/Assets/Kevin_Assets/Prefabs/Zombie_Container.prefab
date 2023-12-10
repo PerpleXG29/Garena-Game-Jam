@@ -99,7 +99,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -145,13 +145,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8813596066573698984}
+  - component: {fileID: 2688930478921676758}
   - component: {fileID: 4588279439452383569}
   - component: {fileID: 6707491674876316334}
-  - component: {fileID: 3400193298634591839}
   - component: {fileID: 4017463965300009884}
   - component: {fileID: 3860270270654282240}
   - component: {fileID: 8906136806016114585}
-  - component: {fileID: 2688930478921676758}
+  - component: {fileID: 7537091888711392990}
   m_Layer: 7
   m_Name: Zombie
   m_TagString: Monster
@@ -175,6 +175,41 @@ Transform:
   - {fileID: 5601172024517948513}
   m_Father: {fileID: 3209464439076664881}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2688930478921676758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7599951021264315878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20c4b069150e5e548a7487344e8bb19f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxSpeed: 6
+  HearRange: 8
+  SeeRange: 15
+  fieldOfViewSize: 90
+  PatrolDistance: 10
+  PatrolDuration: 5
+  CheckDuration: 5
+  ChaseDuration: 6
+  ShriekDistance: 25
+  ShriekDuration: 2
+  ZombieLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  PlayerLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  AIPath: {fileID: 8906136806016114585}
+  SpawnLocation: {fileID: 3295463580517115034}
+  eyeTransform: {fileID: 5601172024517948513}
+  AudioManager: {fileID: 5732829795836839564}
+  SpawnManager: {fileID: 0}
+  Target: {fileID: 0}
+  IsChasing: 0
 --- !u!33 &4588279439452383569
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -225,29 +260,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &3400193298634591839
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7599951021264315878}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &4017463965300009884
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -256,7 +268,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7599951021264315878}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 10
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -342,42 +354,32 @@ MonoBehaviour:
   pickNextWaypointDist: 2
   endReachedDistance: 0.5
   alwaysDrawGizmos: 0
-  slowWhenNotFacingTarget: 1
+  slowWhenNotFacingTarget: 0
   whenCloseToDestination: 0
   constrainInsideGraph: 0
---- !u!114 &2688930478921676758
-MonoBehaviour:
+--- !u!136 &7537091888711392990
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7599951021264315878}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20c4b069150e5e548a7487344e8bb19f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaxSpeed: 6
-  HearRange: 10
-  SeeRange: 10
-  fieldOfViewSize: 70
-  PatrolDistance: 10
-  PatrolDuration: 5
-  CheckDuration: 5
-  ChaseDuration: 3
-  ShriekDistance: 10
-  ShriekDuration: 2
-  ZombieLayerMask:
-    serializedVersion: 2
-    m_Bits: 128
-  PlayerLayerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  AIPath: {fileID: 8906136806016114585}
-  SpawnLocation: {fileID: 3295463580517115034}
-  eyeTransform: {fileID: 5601172024517948513}
-  Target: {fileID: 0}
-  IsChasing: 0
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7657284673368309220
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,22 +429,22 @@ MonoBehaviour:
   SFX:
   - Name: Growl_1
     Clip: {fileID: 8300000, guid: e21beaaacf394ec48b98b431fd4e28d0, type: 3}
-    Volume: 0
-    Pitch: 0
+    Volume: 1
+    Pitch: 1
     Source: {fileID: 0}
     PlayOnAwake: 0
     Loop: 0
   - Name: Growl_2
     Clip: {fileID: 8300000, guid: e21beaaacf394ec48b98b431fd4e28d0, type: 3}
-    Volume: 0
-    Pitch: 0
+    Volume: 1
+    Pitch: 1
     Source: {fileID: 0}
     PlayOnAwake: 0
     Loop: 0
   - Name: Shriek_1
     Clip: {fileID: 8300000, guid: 6f96a433fa9f6b94ba94b1d1210585e2, type: 3}
-    Volume: 0
-    Pitch: 0
+    Volume: 1
+    Pitch: 1.881
     Source: {fileID: 0}
     PlayOnAwake: 0
     Loop: 0

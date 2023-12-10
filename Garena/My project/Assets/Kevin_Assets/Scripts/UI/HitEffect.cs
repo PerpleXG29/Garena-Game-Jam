@@ -22,23 +22,14 @@ public class HitEffect : MonoBehaviour
 
     private void Start()
     {
-        HealthPoint.OnDamage += TriggerHitVFX;
         _image.sprite = _healthLossSprite1;
 
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            HealthPoint.OnDamage.Invoke(1);
-            count++;
-        }
-    }
 
-    private void TriggerHitVFX(int val)
+    public void TriggerHitVFX()
     {
-       
+        count++;
 
         StopAllCoroutines();
         StartCoroutine(DeactivateImage());

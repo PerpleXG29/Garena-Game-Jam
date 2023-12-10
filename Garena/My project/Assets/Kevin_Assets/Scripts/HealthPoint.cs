@@ -5,15 +5,24 @@ using System;
 
 public class HealthPoint : MonoBehaviour
 {
+    public static HealthPoint Instance;
+
     [SerializeField] int _maxHealthPoint;
+    [SerializeField] Animator _animator;
+    [SerializeField] HitEffect _hitEffect;
+
     int currentHealthPoint;
 
-    public static Action<int> OnDamage;
+    bool isTriggered = false;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
         currentHealthPoint = _maxHealthPoint;
-        OnDamage += ReduceDamage;
     }
 
     private void Update()
@@ -24,13 +33,19 @@ public class HealthPoint : MonoBehaviour
         //}
     }
 
-    private void ReduceDamage(int damage)
+    public void ReduceDamage(int damage)
     {
         currentHealthPoint -= damage;
-        if(currentHealthPoint < 0)
+        _hitEffect.TriggerHitVFX();
+
+        if(currentHealthPoint < 0 && !isTriggered)
         {
             //TODO: TRIGGER RESTART SCENE or GameOverScene
+            _animator.SetTrigger("Death");
+            isTriggered = true;
 
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
     }
 }

@@ -10,12 +10,9 @@ public class PickUp : MonoBehaviour
     public bool Cure3 = false;
     public bool Carrying = false;
 
-<<<<<<< Updated upstream
     public TextMeshProUGUI PickUpText;
-=======
     [SerializeField] Animator _animator;
 
->>>>>>> Stashed changes
 
     private void Start()
     {
@@ -42,12 +39,8 @@ public class PickUp : MonoBehaviour
             if (Input.GetKey(KeyCode.F) && !Carrying)
             {
                 PickUpLogic(other.gameObject);
-<<<<<<< Updated upstream
                 PickUpText.enabled=false;
-=======
                 _animator.SetTrigger(GrabHash); 
-
->>>>>>> Stashed changes
             }
         }
         

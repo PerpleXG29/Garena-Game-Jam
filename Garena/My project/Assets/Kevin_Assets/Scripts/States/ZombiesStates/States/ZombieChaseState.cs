@@ -5,24 +5,49 @@ using UnityEngine;
 public class ZombieChaseState : ZombieBaseState
 {
     public ZombieChaseState(ZombieStateMachine ZSM) : base(ZSM) { }
-
+    const float turnSpeed = 30f;
 
     float checkTime;
+
+    float attackCooldown = 2f;
+    float rampageTimer = 3f;
+
+    float rampageCountdown;
+    float countDownCooldown;
+    bool isRageDone;
     public override void EnterState()
     {
+        ZSM.IsChasing = true;
+        ZSM.SpawnManager.CheckForSong();
         ZSM.ChangeMaterial(Color.green);
 
         ZSM.AIPath.destination = ZSM.Target.transform.position;
-
-        ZSM.IsChasing = true;
+        countDownCooldown = attackCooldown;
+        rampageCountdown = rampageTimer;
     }
 
 
     public override void UpdateState(float deltaTime)
     {
+        //RAGE
+        if(!isRageDone)
+        {
+            ZSM.AIPath.destination = ZSM.Target.transform.position;
+            countDownCooldown--;
+        }
 
-        
-        if (ZSM.IsPlayerVisible())
+        if (countDownCooldown <= 0f) isRageDone = true;
+
+
+        if (!isRageDone) return;
+
+        //NormalChase
+        Vector3 rayDirection = ZSM.Target.transform.position - ZSM.transform.position;
+
+        RaycastHit hit;
+        Physics.Raycast(ZSM.transform.position, rayDirection, out hit, ZSM.SeeRange, ZSM.PlayerLayerMask);
+
+        if (hit.collider || ZSM.IsPlayerVisible())
         {
             GetAllZombieNear();
             //Check if player is visible and still far away
@@ -40,11 +65,21 @@ public class ZombieChaseState : ZombieBaseState
                 //Play Attack Animation Here!
                 ZSM.AIPath.canMove = false;
                 ZSM.transform.LookAt(ZSM.Target.transform.position, Vector3.up);
+
+                if(countDownCooldown <= 0f)
+                {
+                    HealthPoint.Instance.ReduceDamage(1);
+                    countDownCooldown = attackCooldown;
+                }
+                countDownCooldown -= deltaTime;
+
+
             }
             checkTime = 0f;
         }
         else 
         {
+
             checkTime += deltaTime;
         }
          
@@ -59,7 +94,7 @@ public class ZombieChaseState : ZombieBaseState
     {
         ZSM.IsChasing = false;
         ZSM.AIPath.canMove = true;
-
+        ZSM.SpawnManager.CheckForSong();
     }
 
     private void GetAllZombieNear()

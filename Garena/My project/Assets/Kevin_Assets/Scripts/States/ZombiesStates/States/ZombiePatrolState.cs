@@ -8,22 +8,30 @@ public class ZombiePatrolState : ZombieBaseState
 
     Vector3 searchedPosition;
     float timeCounter = 0f;
+
+
     public override void EnterState()
     {
+        ZSM.SpawnManager.CheckForSong();
         ZSM.ChangeMaterial(Color.red);
 
         GetRandomPatrolPosition();
         ZSM.AIPath.destination = searchedPosition;
+
+        ZSM.AudioManager.PlaySfx("Growl_1");
     }
     public override void UpdateState(float deltaTime)
     {
         if (ZSM.IsPlayerVisible()) ZSM.SeeTargetEvent();
+        if (ZSM.IsPlayerRunning()) ZSM.HearTargetEvent(ZSM.Target.transform.position);
 
 
         if (!ZSM.AIPath.reachedEndOfPath) return;
         timeCounter += deltaTime;
 
-        if(timeCounter >= ZSM.PatrolDuration)
+
+
+        if (timeCounter >= ZSM.PatrolDuration)
         {
             GetRandomPatrolPosition();
             timeCounter = 0f;

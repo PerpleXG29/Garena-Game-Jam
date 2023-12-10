@@ -6,6 +6,8 @@ using UnityEngine.Rendering;
 
 public class DropObject : MonoBehaviour
 {
+    [SerializeField] Animator _animator;     
+
     public bool Cure1 = false;
     public bool Cure2 = false;
     public bool Cure3 = false;
@@ -15,6 +17,8 @@ public class DropObject : MonoBehaviour
     public PickUp pickUp;
     public TextMeshProUGUI DropText;
 
+    bool isTriggered = false;
+
     private void Start()
     {
         DropText.enabled = false;
@@ -22,8 +26,13 @@ public class DropObject : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(CureCount);
+        if (CureCount >= 3 && !isTriggered)
+        {
+            _animator.SetTrigger("Win");
+            isTriggered = true;
+        }
     }
+
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -75,6 +84,7 @@ public class DropObject : MonoBehaviour
         {
             return;
         }
+
 
     }
 

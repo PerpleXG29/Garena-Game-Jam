@@ -38,6 +38,7 @@ public class ZombieStateMachine : StateMachine
     public Transform SpawnLocation;
     public Transform eyeTransform;
     public AudioManager AudioManager;
+    public ZombieSpawnManager SpawnManager;
 
     public Target Target;
 
@@ -46,9 +47,10 @@ public class ZombieStateMachine : StateMachine
     Material zombieMaterial;
 
 
-    public void InitializeTarget(Target target)
+    public void InitializeTarget(Target target, ZombieSpawnManager SpawnManager)
     {
         this.Target = target;
+        this.SpawnManager = SpawnManager;
     }
 
     private void Start()
@@ -86,6 +88,7 @@ public class ZombieStateMachine : StateMachine
         zombieMaterial.color = color;
     }
 
+
     public bool IsPlayerVisible()
     {
         if (Target == null) return false;
@@ -93,7 +96,7 @@ public class ZombieStateMachine : StateMachine
         RaycastHit hit;
         Vector3 rayDirection =  Target.transform.position - transform.position;
 
-        if ((Vector3.Angle(rayDirection, transform.forward)) <= fieldOfViewSize * 0.5f)
+        if ((Vector3.Angle(rayDirection, transform.forward)) <= fieldOfViewSize * 0.75f)
         {
             // Detect if player is within the field of view
             if (Physics.Raycast(transform.position, rayDirection, out hit, SeeRange))
@@ -106,12 +109,31 @@ public class ZombieStateMachine : StateMachine
 
     }
 
+    public bool IsPlayerRunning()
+    {
+        if (Target == null) return false;
+
+        MovementSpeedControl control = Target.GetComponent<MovementSpeedControl>();
+        PlayerController pController = Target.GetComponent<PlayerController>();
+
+        if (pController.inputManager.GetPlayerMovement().magnitude == 0f) return false;
+        if (control.isSlow && !control.isSprinting) return false;
+
+        if ((control.isSprinting || pController.inputManager.GetPlayerMovement().magnitude != 0f) && Vector3.Distance(transform.position, Target.transform.position) <= HearRange) return true;
+
+        return false;
+
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(SpawnLocation.position, PatrolDistance);
 
         Gizmos.color = Color.red;
         Gizmos.DrawLine(eyeTransform.position, Vector3.forward * SeeRange);
+
+        Gizmos.color = Color.black;
+        Gizmos.DrawWireSphere(transform.position, HearRange);
     }
 
 

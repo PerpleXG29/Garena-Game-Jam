@@ -11,10 +11,13 @@ public class PlayerController : MonoBehaviour
     public float playerSpeed = 2.0f;
     private float jumpHeight = 1.0f;
     private float gravityValue = -9.81f;
-
+    public float walkNoiseDistance = 8f;
+    public float runNouseDistance = 14f;
     private Transform cameraTransform;
 
     public InputManager inputManager;
+    public PlayerAudioManager AudioManager;
+    public LayerMask ZombieMask;
 
     private void Start()
     {
@@ -39,11 +42,6 @@ public class PlayerController : MonoBehaviour
             playerVelocity.y = 0f;
         }
 
-<<<<<<< Updated upstream
-        
-
-=======
->>>>>>> Stashed changes
         Vector2 movement = inputManager.GetPlayerMovement();
         Vector3 move = new Vector3(movement.x, 0f, movement.y);
 

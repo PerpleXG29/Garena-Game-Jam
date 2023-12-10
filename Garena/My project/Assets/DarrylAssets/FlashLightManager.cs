@@ -70,7 +70,7 @@ public class FlashlightManager : MonoBehaviour
     {
         Battery--;
 
-        if (Battery <= 0)
+        if (Battery <= 0 && isOn)
         {
             Battery = 0;
             flashlight.intensity = 0;

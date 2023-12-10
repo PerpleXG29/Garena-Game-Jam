@@ -9,7 +9,6 @@ public class BatteryRecharge : MonoBehaviour
     public Slider rechargeSlider;
     public float rechargeTime = 5f;
 
-<<<<<<< Updated upstream
     public TextMeshProUGUI RechargeText;
     private bool CanPress = true;
 
@@ -29,17 +28,11 @@ public class BatteryRecharge : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         if (Input.GetKey(KeyCode.R) && other.CompareTag("Player") && CanPress)
-=======
-    bool isTrigger = false;
-    private void OnTriggerStay(Collider other)
-    {
-        if (Input.GetKey(KeyCode.R) && other.CompareTag("Player") && !isTrigger)
->>>>>>> Stashed changes
-        {
+        { 
             RechargeText.enabled = false;
             CanPress = false;
             StartCoroutine(RechargeBatteryCoroutine());
-<<<<<<< Updated upstream
+
             
         }
        
@@ -49,14 +42,8 @@ public class BatteryRecharge : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-<<<<<<< Updated upstream
             RechargeText.enabled = true;
-=======
-            isTrigger = true;
->>>>>>> Stashed changes
-=======
             RechargeText.enabled = false;
->>>>>>> Stashed changes
         }
     }
 
@@ -86,12 +73,7 @@ public class BatteryRecharge : MonoBehaviour
         flashlightManager.Battery = flashlightManager.maxBattery;
         rechargeSlider.value = 0f;
         rechargeSlider.gameObject.SetActive(false);
-<<<<<<< Updated upstream
-       
-       
-=======
         flashlightManager.ToggleFlashlight();
-        isTrigger = false;
->>>>>>> Stashed changes
+
     }
 }

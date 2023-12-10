@@ -15,8 +15,8 @@ public class ZombieCheckState : ZombieBaseState
 
     public override void EnterState()
     {
+        ZSM.AIPath.maxSpeed = ZSM.MaxSpeed * 0.75f;
         ZSM.ChangeMaterial(Color.blue);
-
         ZSM.AIPath.destination = hearPosition;
     }
     public override void UpdateState(float deltaTime)
@@ -36,7 +36,7 @@ public class ZombieCheckState : ZombieBaseState
 
     public override void ExitState()
     {
-        
+        ZSM.AIPath.maxSpeed = ZSM.MaxSpeed;
     }
 
 }
